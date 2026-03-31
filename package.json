@@ -12,13 +12,18 @@
     "preview": "vite preview",
     "tauri": "tauri"
   },
-  "keywords": ["macos", "disk-space", "cleanup", "tauri", "desktop-app"],
+  "keywords": [
+    "macos",
+    "disk-space",
+    "cleanup",
+    "tauri",
+    "desktop-app"
+  ],
   "author": "",
   "license": "MIT",
   "packageManager": "pnpm@10.6.2",
   "dependencies": {
     "@tauri-apps/api": "^2.10.1",
-    "@tauri-apps/plugin-shell": "^2.3.5",
     "react": "^19.2.4",
     "react-dom": "^19.2.4",
     "zustand": "^5.0.12"
