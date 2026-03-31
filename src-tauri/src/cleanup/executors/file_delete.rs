@@ -4,21 +4,62 @@ use std::path::{Path, PathBuf};
 /// Known safe path patterns relative to the home directory.
 /// Only paths matching these patterns can be deleted.
 const SAFE_PATTERNS: &[&str] = &[
+    // System / macOS
     "Library/Caches",
     "Library/Developer/CoreSimulator",
     "Library/Developer/Xcode/DerivedData",
+    "Library/Application Support/Code/Cache",
+    "Library/Application Support/Code/CachedData",
+    "Library/Application Support/Code/CachedExtensionVSIXs",
+    "Library/Application Support/Cursor/Cache",
+    "Library/Application Support/Cursor/CachedData",
+    // Node / JS
     "Library/pnpm",
     ".npm",
     ".yarn",
     ".pnpm-store",
-    ".gradle",
     ".expo",
+    // Rust
+    ".cargo/registry",
+    ".cargo/git",
+    // Python
+    ".cache/pip",
+    ".conda/pkgs",
+    ".mypy_cache",
+    ".ruff_cache",
+    "miniconda3/pkgs",
+    "anaconda3/pkgs",
+    // Go
+    "go/pkg",
+    ".cache/go-build",
+    // Java
+    ".m2/repository",
+    ".gradle",
+    // Ruby
+    ".gem",
+    ".bundle/cache",
+    // .NET
+    ".nuget",
+    ".dotnet",
+    ".local/share/NuGet",
+    // Flutter / Dart
+    ".pub-cache",
+    ".dartServer",
+    // CocoaPods
+    ".cocoapods",
+    // PHP
+    ".composer/cache",
 ];
 
-/// Check if a path component is `node_modules`.
-fn contains_node_modules(path: &Path) -> bool {
+/// Check if the path contains a known safe directory component
+/// (node_modules, target with Cargo.toml, venv with pyvenv.cfg).
+fn contains_safe_project_dir(path: &Path) -> bool {
     path.components()
-        .any(|c| c.as_os_str() == "node_modules")
+        .any(|c| {
+            let name = c.as_os_str().to_string_lossy();
+            name == "node_modules" || name == "target" || name == "venv"
+                || name == ".venv" || name == ".tox" || name == "__pycache__"
+        })
 }
 
 /// Validate that a path is safe to delete:
@@ -53,7 +94,7 @@ fn validate_path(path: &Path) -> Result<PathBuf> {
     let is_safe = SAFE_PATTERNS
         .iter()
         .any(|pattern| relative.starts_with(pattern))
-        || contains_node_modules(&canonical);
+        || contains_safe_project_dir(&canonical);
 
     if !is_safe {
         anyhow::bail!(

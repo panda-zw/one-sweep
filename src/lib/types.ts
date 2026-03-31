@@ -9,7 +9,19 @@ export type ScanCategory =
   | "xcode_derived_data"
   | "gradle_cache"
   | "system_caches"
-  | "homebrew_cache";
+  | "homebrew_cache"
+  | "rust_targets"
+  | "cargo_caches"
+  | "python_caches"
+  | "python_venvs"
+  | "go_cache"
+  | "maven_cache"
+  | "ruby_cache"
+  | "dotnet_cache"
+  | "flutter_cache"
+  | "cocoapods_cache"
+  | "composer_cache"
+  | "ide_caches";
 
 export interface ScanItem {
   id: string;

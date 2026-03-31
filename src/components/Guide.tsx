@@ -43,6 +43,46 @@ const sections = [
         label: "Homebrew",
         desc: "Downloaded package files that are no longer needed after installation.",
       },
+      {
+        label: "Rust",
+        desc: "target/ build artifacts in Cargo projects, plus registry and git caches in ~/.cargo.",
+      },
+      {
+        label: "Python",
+        desc: "pip cache, conda packages, virtual environments (venv/.venv), and linter caches.",
+      },
+      {
+        label: "Go",
+        desc: "Go module cache in ~/go/pkg and build cache.",
+      },
+      {
+        label: "Java / Maven",
+        desc: "Maven local repository (~/.m2/repository) with downloaded dependencies.",
+      },
+      {
+        label: "Ruby",
+        desc: "Gem cache and Bundler downloads.",
+      },
+      {
+        label: ".NET",
+        desc: "NuGet package cache and .NET SDK artifacts.",
+      },
+      {
+        label: "Flutter / Dart",
+        desc: "Dart pub cache and Flutter tool artifacts.",
+      },
+      {
+        label: "CocoaPods",
+        desc: "Downloaded pod specs and sources.",
+      },
+      {
+        label: "PHP / Composer",
+        desc: "Composer package download cache.",
+      },
+      {
+        label: "IDE & Editors",
+        desc: "VS Code, Cursor, and JetBrains IDE caches and workspace storage.",
+      },
     ],
   },
   {

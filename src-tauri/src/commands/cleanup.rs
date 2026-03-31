@@ -34,13 +34,13 @@ fn is_path_plausible(path: &str, category: &ScanCategory) -> bool {
         return false;
     }
 
+    let rel = p.strip_prefix(&home).unwrap_or(p);
+
     match category {
         ScanCategory::NodeDependencies => {
-            // Must end with or contain node_modules
             p.components().any(|c| c.as_os_str() == "node_modules")
         }
         ScanCategory::NodeCaches => {
-            let rel = p.strip_prefix(&home).unwrap_or(p);
             rel.starts_with(".npm")
                 || rel.starts_with(".yarn")
                 || rel.starts_with(".pnpm-store")
@@ -48,16 +48,68 @@ fn is_path_plausible(path: &str, category: &ScanCategory) -> bool {
                 || rel.starts_with("Library/pnpm")
         }
         ScanCategory::XcodeDerivedData => {
-            let rel = p.strip_prefix(&home).unwrap_or(p);
             rel.starts_with("Library/Developer/Xcode/DerivedData")
         }
         ScanCategory::GradleCache => {
-            let rel = p.strip_prefix(&home).unwrap_or(p);
             rel.starts_with(".gradle")
         }
         ScanCategory::SystemCaches => {
-            let rel = p.strip_prefix(&home).unwrap_or(p);
             rel.starts_with("Library/Caches")
+        }
+        ScanCategory::RustTargets => {
+            p.components().any(|c| c.as_os_str() == "target")
+        }
+        ScanCategory::CargoCaches => {
+            rel.starts_with(".cargo/registry") || rel.starts_with(".cargo/git")
+        }
+        ScanCategory::PythonCaches => {
+            rel.starts_with("Library/Caches/pip")
+                || rel.starts_with(".cache/pip")
+                || rel.starts_with(".conda/pkgs")
+                || rel.starts_with("miniconda3/pkgs")
+                || rel.starts_with("anaconda3/pkgs")
+                || rel.starts_with(".mypy_cache")
+                || rel.starts_with(".ruff_cache")
+        }
+        ScanCategory::PythonVenvs => {
+            let name = p.file_name().unwrap_or_default().to_string_lossy();
+            name == "venv" || name == ".venv" || name == ".tox" || name == "env"
+        }
+        ScanCategory::GoCache => {
+            rel.starts_with("go/pkg")
+                || rel.starts_with("Library/Caches/go-build")
+                || rel.starts_with(".cache/go-build")
+        }
+        ScanCategory::MavenCache => {
+            rel.starts_with(".m2/repository")
+        }
+        ScanCategory::RubyCache => {
+            rel.starts_with(".gem")
+                || rel.starts_with(".bundle/cache")
+                || rel.starts_with("Library/Caches/com.apple.rubygems")
+        }
+        ScanCategory::DotnetCache => {
+            rel.starts_with(".nuget")
+                || rel.starts_with(".dotnet")
+                || rel.starts_with(".local/share/NuGet")
+        }
+        ScanCategory::FlutterCache => {
+            rel.starts_with(".pub-cache")
+                || rel.starts_with("Library/Caches/flutter")
+                || rel.starts_with(".dartServer")
+        }
+        ScanCategory::CocoaPodsCache => {
+            rel.starts_with("Library/Caches/CocoaPods")
+                || rel.starts_with(".cocoapods")
+        }
+        ScanCategory::ComposerCache => {
+            rel.starts_with(".composer/cache")
+                || rel.starts_with("Library/Caches/composer")
+        }
+        ScanCategory::IdeCaches => {
+            rel.starts_with("Library/Application Support/Code/")
+                || rel.starts_with("Library/Application Support/Cursor/")
+                || rel.starts_with("Library/Caches/JetBrains")
         }
         _ => false,
     }
