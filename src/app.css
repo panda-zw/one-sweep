@@ -1,3 +1,13 @@
+/* === Fonts === */
+
+@font-face {
+  font-family: "Pacifico";
+  src: url("/fonts/Pacifico-Regular.ttf") format("truetype");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
 /* === Theme: shadcn zinc === */
 
 /* Dark (default) */
@@ -94,9 +104,10 @@ body {
 }
 
 .header__title {
-  font-size: 18px;
-  font-weight: 600;
-  letter-spacing: -0.3px;
+  font-family: "Pacifico", cursive;
+  font-size: 20px;
+  font-weight: 400;
+  letter-spacing: 0.5px;
 }
 
 .header__nav {
