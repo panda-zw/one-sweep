@@ -2,6 +2,8 @@
 
 A macOS desktop app that finds the real disk space hogs on your Mac and lets you safely reclaim storage without breaking anything.
 
+[![Download](https://img.shields.io/github/v/release/panda-zw/one-purge?label=Download%20Latest&style=for-the-badge&color=brightgreen)](https://github.com/panda-zw/one-purge/releases/latest)
+
 ![Built with Tauri](https://img.shields.io/badge/Built_with-Tauri-blue?logo=tauri)
 ![React](https://img.shields.io/badge/React-19-blue?logo=react)
 ![Rust](https://img.shields.io/badge/Rust-Backend-orange?logo=rust)
